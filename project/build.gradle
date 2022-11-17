@@ -1,0 +1,48 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.telerikacademy.healthy.food.social.network'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'junit:junit:4.13'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    compile('com.cloudinary:cloudinary-http44:1.5.0')
+    testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
+
+}
+
+test {
+    useJUnitPlatform()
+}

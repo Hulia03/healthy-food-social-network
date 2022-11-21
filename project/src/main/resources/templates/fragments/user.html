@@ -1,0 +1,30 @@
+<th:block th:fragment="users" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div th:unless="${users.isEmpty()}">
+        <div th:each="user : ${users}">
+            <div class="blog-author">
+                <div class="media align-items-center">
+                    <div class="row">
+                        <div class="col-2">
+                            <span th:if="${user.picture != null}">
+                                 <img th:src="${user.picture}" alt="profile picture" width="100%">
+                            </span>
+                            <span th:if="${user.picture == null}">
+                                 <img src="/img/user.png" alt="default image" width="100%">
+                            </span>
+                        </div>
+                        <div class="col-10">
+                            <a th:href="@{'/users/'+ ${user.id}}">
+                                <h3>
+                                    <span th:text="${user.firstName}">first name</span>
+                                    <span th:text="${user.lastName}">last name</span>
+                                </h3>
+                            </a>
+                            <span th:text="${user.email}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</th:block>

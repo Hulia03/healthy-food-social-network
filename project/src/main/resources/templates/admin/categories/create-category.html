@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Add category</title>
+</head>
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<div class="recepie_details_area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <form action="#" th:action="@{'/admin/categories/new'}" th:object="${category}" method="post"
+                      class="contactForm"
+                      enctype="multipart/form-data">
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                            <h4 class="error" th:if="${error}">Category image is required</h4>
+                            <div class="form-group">
+                                <h4>Category's emoticon *</h4>
+                                <input name="file" type="file" th:field="*{file}"/>
+                                <h4 class="error" th:errors="*{file}"></h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-12  col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <h4>Category's name *</h4>
+                                <input class="form-control" name="category" id="category" type="text"
+                                       th:field="*{category}"
+                                       onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Category'"
+                                       placeholder='Category'>
+                                <h4 class="error" th:errors="*{category}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="genric-btn success-border e-large" value="Save">
+                            SAVE
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

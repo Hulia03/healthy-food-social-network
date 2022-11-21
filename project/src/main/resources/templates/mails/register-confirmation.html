@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Email confirmation</title>
+</head>
+<body>
+<h5>Email Confirmation</h5>
+<p>
+    Hi, you're almost ready to start enjoying HEALTHY FOOD.
+</p>
+<p>
+    Simply click
+    <a th:href="@{''+${host} + '/confirm_account?token='+ ${token}}"><b>here</b></a>
+    to verify your email address.
+</p>
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Registration</title>
+</head>
+
+<body>
+
+<!-- ================ form section start ================= -->
+<section class="contact-section section_padding">
+    <div class="bradcam_area bg-img">
+        <div class="container small">
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title" style="padding-top: 10px">Register</h2>
+                </div>
+                <div class="col-12">
+                    <h4 class="error" th:if="${error}">User profile picture is required</h4>
+                    <h4>Fields marked with an * are required</h4>
+                </div>
+                <div class="col-12">
+                </div>
+                <div class="col-lg-9">
+                    <form action="#" th:action="@{/register}" th:object="${user}" method="post" class="contactForm"
+                          enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Username (email) *</h4>
+                                    <input class="form-control" name="username" id="username" type="text"
+                                           th:field="*{username}"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Username (email) *'"
+                                           placeholder='Username (email) *'>
+                                    <h4 class="error" th:errors="*{username}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Age</h4>
+                                    <input class="form-control" name="age" id="age" type="number"
+                                           th:field="*{age}"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Age'"
+                                           th:value="*{age}"
+                                           placeholder='Age'>
+                                    <h4 class="error" th:errors="*{age}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Password *</h4>
+                                    <input class="form-control" name="password" id="password" type="password"
+                                           th:field="*{password}"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Password *'"
+                                           placeholder='Password *'>
+                                    <h4 class="error" th:errors="*{password}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Confirm password *</h4>
+                                    <input class="form-control" name="passwordConfirmation" id="passwordConfirmation"
+                                           th:field="*{passwordConfirmation}"
+                                           type="password"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Confirm password *'"
+                                           placeholder='Confirm password *'>
+                                    <h4 class="error" th:errors="${user}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>First name *</h4>
+                                    <input class="form-control" name="firstName" id="firstName" type="text"
+                                           th:field="*{firstName}"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'First name *'"
+                                           placeholder='First name *'>
+                                    <h4 class="error" th:errors="*{firstName}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Last name *</h4>
+                                    <input class="form-control" name="lastName" id="lastName" type="text"
+                                           th:field="*{lastName}"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Last name *'"
+                                           placeholder='Last name *'>
+                                    <h4 class="error" th:errors="*{lastName}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Nationality</h4>
+                                    <select th:field="*{nationalityId}" class="form-control upper-case"
+                                            name="nationalities">
+                                        <option value="0">- Choose one -</option>
+                                        <option th:each="nationality : ${nationalities}"
+                                                th:value="${nationality.id}"
+                                                th:text="${nationality.nationality}">
+                                        </option>
+                                    </select>
+                                    <h4 class="error" th:errors="*{nationalityId}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Gender</h4>
+                                    <select th:field="*{genderId}" class="form-control upper-case" name="gender">
+                                        <option value="0">- Choose one -</option>
+                                        <option th:each="gen : ${gender}"
+                                                th:value="${gen.id}"
+                                                th:text="${gen.type}">
+                                        </option>
+                                    </select>
+                                    <h4 class="error" th:errors="*{genderId}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <h4>About you</h4>
+                                    <textarea class="form-control" name="description" id="description" type="text"
+                                              th:field="*{description}"
+                                              onfocus="this.placeholder = ''"
+                                              onblur="this.placeholder = 'About'"
+                                              placeholder='About'></textarea>
+                                    <h4 class="error" th:errors="*{description}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Profile picture visibility *</h4>
+                                    <select th:field="*{visibilityId}" class="form-control upper-case"
+                                            name="visibility">
+                                        <option value="0">- Choose one -</option>
+                                        <option th:each="visibility : ${visibilities}"
+                                                th:value="${visibility.id}"
+                                                th:text="${visibility.type}">
+                                        </option>
+                                    </select>
+                                    <h4 class="error" th:errors="*{visibilityId}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6  col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <h4>Profile picture *</h4>
+                                    <input name="picture" type="file" th:field="*{picture}"/>
+                                    <h4 class="error" th:errors="*{picture}"></h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm btn_4 boxed-btn" value="Register">
+                                REGISTER
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-3">
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-home"></i></span>
+                        <div class="media-body">
+                            <a href="/"><h3>Home page</h3></a>
+                        </div>
+                    </div>
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                        <div class="media-body">
+                            <a href="/login"><h3>Login</h3></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <th:block th:include="~{fragments/footer}"></th:block>
+        </div>
+    </div>
+</section>
+<!-- ================ form section end ================= -->
+</body>
+</html>

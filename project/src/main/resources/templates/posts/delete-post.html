@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Delete post</title>
+</head>
+<body>
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<div class="latest_trand_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="trand_info text-center">
+                    <h3>Are you sure you want to delete post?</h3>
+                    <h3 th:text="${post.title}"></h3>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <form action="#" th:action="@{'/posts/' + ${id} + '/delete'}" method="post">
+                                    <button type="submit" class="genric-btn success-border e-large pull-right"
+                                            value="Save">
+                                        Yes
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <a th:href="@{'/posts/' + ${id}}"
+                                   class="genric-btn primary-border e-large pull-left">
+                                    No
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

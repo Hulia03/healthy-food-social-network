@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Users</title>
+</head>
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+<!--================Blog Area =================-->
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget popular_post_widget">
+                        <h1 class="widget_title">Users</h1>
+                        <div id="user-content"></div>
+                        <div class="blog_right_sidebar" style="text-align: center">
+                            <button id="user-more" class="genric-btn primary-border circle">
+                                more <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <input id="search-input" type="text" class="form-control"
+                                       placeholder='Search Keyword'
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                            </div>
+                        </div>
+                        <button id="search" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn">
+                            Search
+                        </button>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ Blog Area end =================-->
+<th:block th:include="~{fragments/footer}"></th:block>
+<script src="/js-ajax/users.js"></script>
+</body>
+</html>

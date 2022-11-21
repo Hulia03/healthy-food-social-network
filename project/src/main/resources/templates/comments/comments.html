@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Comments</title>
+</head>
+<body>
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<section class="single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <h1 class="widget_title">Comments</h1>
+                        <span th:if="${comments.isEmpty()}">
+                            <h4 th:text="#{comments.emptytitle}"></h4>
+                        </span>
+                        <span th:unless="${comments.isEmpty()}" class="comments-area">
+                        <div th:each="comment: ${comments}">
+
+                            <div class="comment-list">
+                                <div class="row">
+                                     <div class="col-6">
+                                         <h5>
+                                             <span th:text="${comment.creator.firstName}"></span>
+                                             <span th:text="${comment.creator.lastName}"></span>
+                                             <a th:href="@{'/users/' + ${comment.creator.id}}"></a>
+                                        </h5>
+
+                                            <p th:text="${#dates.format(comment.timestamp, 'dd MMMM yyyy')}">
+                                                December 4, 2017 at 3:12 pm </p>
+                                        <div>
+                                            <span th:id="'comment-likes-count-' + ${comment.id}"
+                                                  th:text="${comment.likedUsers.size()}"></span>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                         <span sec:authorize="isAuthenticated()">
+                            <p>
+                            <span th:id="${comment.id}" th:class="'like-comment-btn ' + ${comment.id}">
+                                 <i th:if="${!T(com.telerikacademy.healthy.food.social.network.models.dtos.mappers.Mapper).isCommentLiked(#authentication.name, comment.likedUsers.stream())}"
+                                    id="like-comment" class="fa fa-thumbs-o-up like">
+                                  Like
+                                 </i>
+                            </span>
+                            <span th:id="${comment.id}" th:class="'dislike-comment-btn '+ ${comment.id}">
+                                 <i th:if="${T(com.telerikacademy.healthy.food.social.network.models.dtos.mappers.Mapper).isCommentLiked(#authentication.name, comment.likedUsers.stream())}"
+                                    id="dislike-comment" class="fa fa-thumbs-o-up dislike">
+                                  Dislike
+                                 </i>
+                            </span>
+                            </p>
+                         </span>
+                           </div>
+                             </div>
+                               <div class="col-6">
+                                   <div class="desc">
+                                       <p th:text="${comment.description}" class="comment">
+                                           Comment text
+                                       </p>
+                                         <span sec:authorize="isAuthenticated()"
+                                               th:if="${#authorization.expression('hasRole(''ADMIN'')')
+                                          || comment.creator.email == #authentication.name}">
+                                             <a th:href="@{'/comments/' + ${comment.id} + '/update'}"
+                                                style="color: dodgerblue">
+                                                <i class="fa fa-pencil-square-o like" aria-hidden="true">Edit</i>
+                                            </a>
+                                        </span>
+                                   </div>
+                               </div>
+                             </div>
+                            </div>
+                        </div>
+                      </span>
+
+                    </aside>
+                </div>
+                <div class="blog_right_sidebar" sec:authorize="isAuthenticated()">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <h1 class="widget_title">Leave a Comment</h1>
+                        <form class="form-contact comment_form" action="#"
+                              th:action="@{'/posts/' + ${id} + '/new'}" th:object="${dto}" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="7"
+                                        th:field="*{comment}"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Comment'"
+                                        placeholder="Write Comment"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send
+                                </button>
+                            </div>
+                        </form>
+                    </aside>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <img alt="image"
+                             src="http://res.cloudinary.com/healthyfood/image/upload/v1587139407/kpvqz3wst9rw8k4g3zjp.jpg"
+                             width="100%">
+                    </aside>
+                </div>
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <img alt="image"
+                             src="http://res.cloudinary.com/healthyfood/image/upload/v1587157498/uzlfyljllvcobjqnhms2.jpg"
+                             width="100%">
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<th:block th:include="~{fragments/footer}"></th:block>
+<script src="/js-ajax/comment.js"></script>
+</body>
+</html>

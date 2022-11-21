@@ -1,0 +1,83 @@
+.bg-img {
+    /* The image used */
+    background-image: url(https://res.cloudinary.com/healthyfood/image/upload/v1588923137/bradcam_men5qi.png);
+
+    min-height: 380px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.bell {
+    color: yellow;
+}
+
+.right_sidebar {
+    background: rgba(133, 111, 100, 0.1) !important;
+}
+
+.comment {
+    word-wrap: break-word;
+}
+
+.small {
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 80%;
+}
+
+.error {
+    margin: 1%;
+    color: darkred;
+}
+
+.upper-case {
+    text-transform: uppercase;
+}
+
+.blog-author {
+    padding-bottom: 3%;
+    /*border-top: 1px solid greenyellow;*/
+    padding-top: 2%;
+}
+
+.media-body {
+    padding-left: 50px;
+}
+
+.category {
+    width: 30px;
+    margin: 1%;
+}
+
+.sort {
+    padding-top: 2%;
+    margin-bottom: 2%;
+}
+
+.primary-sort {
+    width: 134px;
+    height: 50px;
+    margin: 9px 1px;
+}
+
+.btn-title {
+    font-family: Satisfy, cursive;
+    font-size: 22px;
+}
+
+.dislike {
+    color: grey;
+    cursor: pointer;
+}
+
+.like {
+    color: #4cd3e3;
+    cursor: pointer;
+}
+
+.customer_feedback_area {
+    padding: 70px;
+}

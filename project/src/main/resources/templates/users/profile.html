@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title th:text="${user.firstName} +' '+ ${user.lastName}">Profile</title>
+</head>
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<div class="recepie_details_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="recepies_thumb">
+                    <input th:value="${id}" id="userId" type="hidden">
+                    <span th:if="${user.picture != null}">
+                          <img th:src="${user.picture}" alt="profile picture">
+                    </span>
+                    <span th:if="${user.picture == null}">
+                         <img src="/img/user.png" alt="profile picture"/>
+                    </span>
+
+                </div>
+            </div>
+            <div class="col-xl-8 col-md-8 col-sm-6 col-xs-12">
+                <div class="recepies_info">
+                    <h3>
+                        <div class="row">
+                            <div class="col-12">
+                                <span th:text="${user.firstName}">firstName</span>
+                                <span th:text="${user.lastName}">lastname</span>
+                            </div>
+                            <div class="col-12">
+                                 <span sec:authorize="isAuthenticated()"
+                                       th:if="${#authorization.expression('hasRole(''ADMIN'')') || user.email.equals(#authentication.name)}">
+                            <a th:href="@{'/users/'+ ${id} + '/update'}"
+                               class="genric-btn success circle">
+                                Edit
+                            </a>
+                        </span>
+                                <span sec:authorize="isAuthenticated()"
+                                      th:if="${!user.email.equals(#authentication.name)}">
+
+                            <span th:if="${connection != null}">
+                                  <span th:if="${connection.status.id == 1}">
+<!--                                     DISCONNECT-->
+                                      <form style="display: inline" action="#"
+                                            th:action="@{'/connections/' + ${connection.id} + '/reject'}"
+                                            method="post">
+                                        <button type="submit" class="genric-btn success circle"
+                                                value="Save">
+                                            DISCONNECT
+                                        </button>
+                                      </form>
+                                 </span>
+
+                                 <span th:if="${connection.status.id == 2 && connection.sender.email.equals(#authentication.name)}">
+<!--                                     SENT REQUEST (REJECT)-->
+                                      <form style="display: inline" action="#"
+                                            th:action="@{'/connections/' + ${connection.id} + '/reject'}"
+                                            method="post">
+                                        <button type="submit" class="genric-btn success circle"
+                                                value="Save">
+                                            SENT REQUEST (REJECT)
+                                        </button>
+                                      </form>
+                                 </span>
+
+                                <span th:if="${connection.status.id == 2 && connection.receiver.email.equals(#authentication.name)}">
+                                    <form style="display: inline" action="#"
+                                          th:action="@{'/connections/' + ${connection.id} + '/confirm'}"
+                                          method="post">
+                                        <button type="submit" class="genric-btn success circle"
+                                                value="Save">
+                                            CONFIRM
+                                        </button>
+                                      </form>
+                                    <form style="display: inline" action="#"
+                                          th:action="@{'/connections/' + ${connection.id} + '/reject'}"
+                                          method="post">
+                                        <button type="submit" class="genric-btn success circle"
+                                                value="Save">
+                                            REJECT
+                                        </button>
+                                      </form>
+
+                                 </span>
+                            </span>
+
+                             <span th:if="${connection == null}">
+                                 <!--                                     CONNECT-->
+                                 <form style="display: inline" action="#"
+                                       th:action="@{'/connections/users/' + ${id} + '/send'}"
+                                       method="post">
+                                        <button type="submit" class="genric-btn success circle"
+                                                value="Save">
+                                            CONNECT
+                                        </button>
+                                      </form>
+                             </span>
+
+                        </span>
+                            </div>
+                        </div>
+                    </h3>
+
+                    <div class="resepies_details">
+                        <ul>
+                            <li>
+                                <p><strong>Email</strong> <span th:text="${user.email}">email</span></p>
+                            </li>
+                            <li th:if="${user.age > 0}">
+                                <p>
+                                    <strong>Age</strong>
+                                    <span th:text="${user.age}">age</span>
+                                </p>
+                            </li>
+                            <li th:if="${user.gender != null}">
+                                <p>
+                                    <strong>Gender</strong>
+                                    <span th:text="${user.gender.type}">gender</span>
+                                </p>
+                            </li>
+                            <li th:if="${user.nationality != null}">
+                                <p><strong>Nationality</strong>
+                                    <span th:text="${user.nationality.nationality}">nationality</span>
+                                </p>
+                            </li>
+                            <li th:if="${user.description != null && !user.description.isEmpty()}">
+                                <br><br>
+                                <h4>
+                                    <span th:text="${user.description}">about</span>
+                                </h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 posts-list">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget popular_post_widget">
+                        <h1 class="widget_title">Lately posts</h1>
+
+                        <div id="user-feed-content"></div>
+
+                        <div class="blog_right_sidebar" style="text-align: center">
+                            <button id="user-feed-more" class="genric-btn primary-border circle">
+                                more <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+<script src="/js-ajax/user-posts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Error</title>
+</head>
+<body>
+
+<div class="latest_trand_area">
+    <div class="container">
+        <div class="row" th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+            <div class="col-xl-12">
+                <div class="trand_info text-center">
+                    <h3 th:text="${httpStatus}">Status code</h3>
+                    <h3 th:text="${message}">Error message</h3>
+                    <h3 th:text="${exception}">Exception type</h3>
+                    <a href="/home" class="boxed-btn3">Go back to homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

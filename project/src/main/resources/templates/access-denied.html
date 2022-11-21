@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Access Denied</title>
+</head>
+<body>
+
+<div class="latest_trand_area">
+    <div class="container">
+        <div class="row" >
+            <div class="col-xl-12">
+                <div class="trand_info text-center">
+                    <h3>You are not authorized to access this resource.</h3>
+
+                    <a href="/login" class="boxed-btn3">Please Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

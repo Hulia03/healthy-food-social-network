@@ -1,0 +1,64 @@
+<th:block th:fragment="posts" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div th:unless="${posts.isEmpty()}">
+        <div th:each="post : ${posts}">
+            <div class="blog-author">
+                <div class="align-items-center">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <span th:if="${post.media != null && post.media.mediaType.id == 1}">
+                            <img width="100%" th:src="${post.media.picture}" alt="post picture">
+                             </span>
+
+                            <span th:if="${post.media != null && post.media.mediaType.id == 2}">
+                           <img width="100%" src="/img/video.png" alt="video default"/>
+
+                        </span>
+
+                            <span th:if="${post.media == null}">
+                             <img width="100%" src="/img/photo.png" alt="post picture"/>
+                        </span>
+                        </div>
+
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div>
+                                <a th:href="@{'/posts/'+ ${post.id}}">
+                                    <h3 th:text="${post.title}">Title</h3>
+                                </a>
+
+                                <span class="category">
+                                       <i class="fa fa-calendar" aria-hidden="true"></i>
+                                     <span th:text="${#dates.format(post.timestamp, 'dd MMMM yyyy')}">
+                                        December 4, 2017 at 3:12 pm </span>
+                                </span>
+
+                                <span class="category">
+                                      <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <span th:text="${post.likedUsers.size()}"></span>
+                                    <span>likes</span>
+                                </span>
+
+                                <span class="category">
+                                    <i class="fa fa-comment" aria-hidden="true"></i>
+                                    <span th:text="${post.comments.size()}"></span>
+                                    <span>comments</span>
+                                </span>
+
+                            </div>
+                            <div>
+                                 <span th:unless="${post.categories.isEmpty()}">
+                             <span th:each="category : ${post.categories}">
+                                 <img "${category.category}" class="category"
+                                      th:title="${category.category}"
+                                      th:alt="${category.category}"
+                                      th:src="${category.emoji}"/>
+                             </span>
+                         </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

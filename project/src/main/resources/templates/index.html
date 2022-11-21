@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>HEALTHY FOOD</title>
+</head>
+
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+
+<!-- slider_area_start -->
+<div class="slider_area">
+    <div class="single_slider  d-flex align-items-center slider_bg_1">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-xl-12">
+                    <div class="slider_text text-center">
+                        <div class="text">
+                            <h3>
+                                The Art of Healthy Living
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- slider_area_end -->
+
+<!-- recepie_area_start  -->
+<div class="recepie_area">
+    <div class="container">
+        <div class="row" th:unless="${posts.isEmpty()}">
+            <div class="col" th:each="post : ${posts}">
+                <div class="single_recepie text-center">
+                    <div class="recepie_thumb">
+                        <span th:if="${post.media != null && post.media.mediaType.id == 1}">
+                        <img th:src="${post.media.picture}" alt="post picture" height="200px">
+                        </span>
+
+                        <span th:if="${post.media != null && post.media.mediaType.id == 2}">
+                              <img src="/img/video.png" alt="post video" height="200px"/>
+                        </span>
+
+                        <span th:if="${post.media == null}">
+                             <img src="/img/user.png" alt="profile picture" height="200px"/>
+                        </span>
+                    </div>
+                    <h3 th:text="${post.title}">Post title</h3>
+
+                    <h4 style="display: inline">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </h4>
+                    <h4 th:text="${post.creator.firstName}" style="display: inline"></h4>
+                    <h4 th:text="${post.creator.lastName}" style="display: inline"></h4>
+
+                    <h5>
+                        <span th:text="${post.likedUsers.size()}" style="display: inline"></span>
+                        <i class="fa fa-user" aria-hidden="true"></i> like post
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                    </h5>
+                    <a th:href="@{'/posts/'+ ${post.id}}"
+                       class="line_btn">
+                        View Full Post
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /recepie_area_start  -->
+
+<!-- JS here -->
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>About us</title>
+</head>
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<div class="customer_feedback_area">
+    <div class="container">
+        <div class="row justify-content-center mb-50">
+            <div class="col-xl-9">
+                <div class="section_title text-center">
+                    <h3>Welcome to the Healthy Food Social Network</h3>
+                    <p>We are Silvia and Tanya and we developed Healthy Food Social Network. Enjoy it!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="customer_active owl-carousel">
+                    <div class="single_customer d-flex">
+                        <div class="thumb">
+                            <img src="https://res.cloudinary.com/healthyfood/image/upload/v1587554769/xuvwubznoxdy8hbd2vse.jpg"
+                                 width="100px" , height="100px">
+                        </div>
+                        <div class="customer_meta">
+                            <h3><a href="https://www.linkedin.com/in/silvia-ivanova-88a15217a">Silvia Ivanova</a></a></h3>
+                            <span>Developer</span>
+                            <p>Smiling programmer who loves arts and sports<br><br></p>
+                        </div>
+                    </div>
+                    <div class="single_customer d-flex">
+                        <div class="thumb">
+                            <img src="https://res.cloudinary.com/healthyfood/image/upload/v1587571486/dtwvjrkcopgeros6rkbo.jpg"
+                                 width="100px" , height="100px">
+                        </div>
+                        <div class="customer_meta">
+                            <h3><a href="https://www.linkedin.com/in/tanya-chavdarova-16a726125">Tanya Chavdarova</a></h3>
+                            <span>Developer</span>
+                            <p>Loyal person who loves to study and support the team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section_title text-center">
+            <h3>Why Healthy Food</h3>
+            <div>
+                <video width="100%" controls="controls">
+                    <source src="https://res.cloudinary.com/healthyfood/video/upload/v1588923235/promo_ivrzyr.mp4"/>
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</body>
+
+</html>

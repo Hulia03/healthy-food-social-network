@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title th:text="${post.title}">Post</title>
+</head>
+<body>
+
+<th:block th:include="~{fragments/header}"></th:block>
+<th:block th:include="~{fragments/slider}"></th:block>
+
+<section class="single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="feature-img">
+                        <span th:if="${post.media != null && post.media.mediaType.id == 1}">
+                            <img width="100%" th:src="${post.media.picture}" alt="post picture">
+                        </span>
+
+                        <span th:if="${post.media != null && post.media.mediaType.id == 2}">
+                             <video width="100%" controls="controls">
+                             <source th:src="${post.media.picture}"/>
+                            </video>
+
+                        </span>
+
+                        <span th:if="${post.media == null}">
+                             <img width="50%" src="/img/photo.png" alt="profile picture"/>
+                        </span>
+                    </div>
+                    <div class="blog_details">
+                        <h1 th:text="${post.title}">Title</h1>
+                        <ul class="blog-info-link mt-3 mb-4" style="color: #999999">
+                            <li><span th:if="${post.creator.enabled == true}">
+                                <a th:href="@{'/users/'+ ${post.creator.id}}"><i class="fa fa-user"></i>
+                                    <span th:text="${post.creator.firstName} +' '+ ${post.creator.lastName}"></span>
+                                </a>
+                                </span>
+                                <span th:unless="${post.creator.enabled == true}">
+                                <i class="fa fa-user"></i>
+                                    <span th:text="${post.creator.firstName} +' '+ ${post.creator.lastName}"></span>
+                                </span>
+                            </li>
+                            <li>
+                                <span th:text="${#dates.format(post.timestamp, 'dd MMMM yyyy')}"></span>
+                            </li>
+                            <li>
+                                <span id="post-likes-count" th:text="${post.likedUsers.size()}"></span>
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <span sec:authorize="isAuthenticated()">
+                                    <input th:value="${id}" id="postId" type="hidden">
+
+                                    <span id="like-btn">
+                                         <i th:if="${!isLiked}" id="like-post" class="fa fa-thumbs-o-up like">
+                                          Like
+                                         </i>
+                                    </span>
+
+                                    <span id="dislike-btn">
+                                         <i th:if="${isLiked}" id="dislike-post" class="fa fa-thumbs-o-up dislike">
+                                          Dislike
+                                         </i>
+                                    </span>
+                                </span>
+                            </li>
+                            <li sec:authorize="isAuthenticated()"
+                                th:if="${#authorization.expression('hasRole(''ADMIN'')') || post.creator.email == #authentication.name}">
+                                <a th:href="@{'/posts/'+ ${id} + '/update'}">
+                                    <i class="fa fa-pencil-square-o like" aria-hidden="true">Edit</i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="blog-info-link mt-3 mb-4" style="color: #999999; font-size: 20px">
+                            <span th:each="category: ${post.categories}">
+                                <!--                                <span th:text="${category.category}"></span>-->
+                                <img th:alt-title="${category.category}" class="category"
+                                     th:title="${category.category}"
+                                     th:alt="${category.category}"
+                                     th:src="${category.emoji}"/>
+                                <span th:text="${category.category}"></span>
+                            </span>
+                        </div>
+                        <p th:text="${post.description}" class="excert">
+                            Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1 class="widget_title">Comments</h1>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 th:if="${post.comments.size() > 5}">
+                                    <a th:href="@{'/posts/'+ ${id} + '/comments'}"
+                                       class="genric-btn success circle pull-right">
+                                        See all
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div>
+                        <span th:if="${comments.isEmpty()}">
+                            <h4 th:text="#{comments.emptytitle}"></h4>
+                        </span>
+
+                            <span th:unless="${comments.isEmpty()}" class="comments-area">
+                        <div th:each="comment: ${comments}">
+
+                            <div class="comment-list">
+                                <div class="row">
+                                     <div class="col-6">
+                                         <h5>
+                                             <span th:text="${comment.creator.firstName}"></span>
+                                             <span th:text="${comment.creator.lastName}"></span>
+                                             <a th:href="@{'/users/' + ${comment.creator.id}}"></a>
+                                        </h5>
+
+                                            <p th:text="${#dates.format(comment.timestamp, 'dd MMMM yyyy')}">
+                                                December 4, 2017 at 3:12 pm </p>
+                                        <div>
+                                            <span th:id="'comment-likes-count-' + ${comment.id}"
+                                                  th:text="${comment.likedUsers.size()}"></span>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                         <span sec:authorize="isAuthenticated()">
+                            <p>
+                            <span th:id="${comment.id}" th:class="'like-comment-btn ' + ${comment.id}">
+                                 <i th:if="${!T(com.telerikacademy.healthy.food.social.network.models.dtos.mappers.Mapper).isCommentLiked(#authentication.name, comment.likedUsers.stream())}"
+                                    id="like-comment" class="fa fa-thumbs-o-up like">
+                                  Like
+                                 </i>
+                            </span>
+                            <span th:id="${comment.id}" th:class="'dislike-comment-btn '+ ${comment.id}">
+                                 <i th:if="${T(com.telerikacademy.healthy.food.social.network.models.dtos.mappers.Mapper).isCommentLiked(#authentication.name, comment.likedUsers.stream())}"
+                                    id="dislike-comment" class="fa fa-thumbs-o-up dislike">
+                                  Dislike
+                                 </i>
+                            </span>
+                            </p>
+                         </span>
+                           </div>
+                             </div>
+                               <div class="col-6">
+                                   <div class="desc">
+                                       <p th:text="${comment.description}" class="comment">
+                                           Comment text
+                                       </p>
+                                         <span sec:authorize="isAuthenticated()"
+                                               th:if="${#authorization.expression('hasRole(''ADMIN'')')
+                                          || comment.creator.email == #authentication.name}">
+                                             <a th:href="@{'/comments/' + ${comment.id} + '/update'}"
+                                                style="color: dodgerblue">
+                                                <i class="fa fa-pencil-square-o like" aria-hidden="true">Edit</i>
+                                            </a>
+                                        </span>
+                                   </div>
+                               </div>
+                             </div>
+                            </div>
+                        </div>
+                      </span>
+                        </div>
+                    </aside>
+                </div>
+                <div class="blog_right_sidebar" sec:authorize="isAuthenticated()">
+                    <aside class="single_sidebar_widget search_widget right_sidebar">
+                        <h1 class="widget_title">Leave a Comment</h1>
+                        <form class="form-contact comment_form" action="#"
+                              th:action="@{'/posts/' + ${post.id} + '/new'}" th:object="${dto}" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="7"
+                                        th:field="*{comment}"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Comment'"
+                                        placeholder="Write Comment"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send
+                                </button>
+                            </div>
+                        </form>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<th:block th:include="~{fragments/footer}"></th:block>
+<script src="/js-ajax/post.js"></script>
+<script src="/js-ajax/comment.js"></script>
+</body>
+</html>
